@@ -16,7 +16,7 @@ export interface TryOnSessionResponse {
 
 export interface SessionStatus {
   id: string;
-  status: 'created' | 'processing' | 'completed' | 'failed';
+  status: 'created' | 'processing' | 'completed' | 'failed' | 'CREATED' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
   output_image_url?: string;
   error_reason?: string;
   progress_message?: string;

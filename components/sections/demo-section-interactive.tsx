@@ -114,7 +114,8 @@ export function DemoSection() {
   const getStatusIcon = () => {
     if (!status) return null
     
-    switch (status.status) {
+    const normalizedStatus = status.status.toLowerCase()
+    switch (normalizedStatus) {
       case 'processing':
         return <Loader2 className="h-5 w-5 text-primary animate-spin" />
       case 'completed':
