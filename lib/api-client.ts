@@ -1,6 +1,13 @@
 // API Client for TryOnAI Backend
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
+// Extract base URL without /api suffix for static files
+const getBaseURL = () => {
+  const url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+  // Remove /api suffix if present
+  return url.replace(/\/api$/, '');
+};
+
 export interface TryOnSessionResponse {
   session_id: string;
   status: string;
@@ -16,6 +23,21 @@ export interface SessionStatus {
 }
 
 export class TryOnAPIClient {
+  /**
+   * Get the full URL for an image path
+   * Converts relative paths like /uploads/outputs/abc.jpg to full URLs
+   */
+  static getImageURL(relativePath: string): string {
+    if (!relativePath) return '';
+    // If already a full URL, return as-is
+    if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+      return relativePath;
+    }
+    // Construct full URL from base URL + relative path
+    const baseURL = getBaseURL();
+    return `${baseURL}${relativePath}`;
+  }
+
   /**
    * Create a new try-on session by uploading user and garment images
    */
